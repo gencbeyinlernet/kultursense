@@ -1,60 +1,220 @@
 import React, { useState } from 'react';
 
+const scenarios = [
+  {
+    id: 1,
+    title: "Tarihi Figürler ve Teknoloji",
+    desc: "Yapay zeka bazen tarihi karakterleri modern eşyalarla çizebilir.",
+    question: "Fatih Sultan Mehmet'i elinde modern bir telefonla gösteren 'komik' bir resim yapıp 'Gerçek Fatih' diye paylaşmak doğru mu?",
+    options: [
+      { id: 'a', text: "Doğrudur, eğlence amaçlı her şey yapılabilir.", type: 'wrong', msg: "Hayır. Eğlence güzeldir ama 'Gerçek Fatih' diyerek paylaşmak tarihi çarpıtır." },
+      { id: 'b', text: "Yanlıştır, tarihi figürlere saygı göstermeli ve dezenformasyon yapmamalıyız.", type: 'correct', msg: "Harika! Kültürel değerlerimizi korumak, onları doğru anlamaktan geçer." },
+    ]
+  },
+  {
+    id: 2,
+    title: "Türk Kahvesi mi Hazır Kahve mi?",
+    desc: "Bir YZ modeli, 'Türk Kahvesi' çiziminde büyük kupada, kremalı bir kahve çiziyor.",
+    question: "Bu görseli bir turizm broşüründe kullanmak sence uygun mu?",
+    options: [
+      { id: 'a', text: "Kullanılabilir, kahve kahvedir.", type: 'wrong', msg: "Yanlış. Türk kahvesinin kendine has bir sunumu (fincan, lokum, telve) vardır. Yanlış tanıtım kültürümüzü bozar." },
+      { id: 'b', text: "Uygun değildir. Türk kahvesinin geleneksel sunumunu yansıtmalıdır.", type: 'correct', msg: "Tebrikler! Kültürel öğelerin doğru temsili, mirasımızın korunması için önemlidir." },
+    ]
+  },
+  {
+    id: 3,
+    title: "Nasreddin Hoca ve Eşek",
+    desc: "YZ, Nasreddin Hoca'yı eşeğe 'düz' binerken çiziyor.",
+    question: "Nasreddin Hoca'nın eşeğe ters binmesi bir simgedir. YZ bunu düzeltmeli mi?",
+    options: [
+      { id: 'a', text: "Evet, ters binmek tehlikeli, YZ düzeltmeli.", type: 'wrong', msg: "Hayır. O ters binişin felsefi ve mizahi bir anlamı vardır. Bunu değiştirmek hikayeyi bozar." },
+      { id: 'b', text: "Hayır, Hoca'nın eşeğe ters binmesi kültürel bir metafordur, korunmalıdır.", type: 'correct', msg: "Süper! Kültürel hikayelerin derinliğini ve detaylarını korumalıyız." },
+    ]
+  },
+  {
+    id: 4,
+    title: "Deyimler ve Çeviri",
+    desc: "Yapay zeka 'Etekleri zil çalmak' deyimini, eteğinde ziller olan bir insan resmi olarak çiziyor.",
+    question: "Bu çizim deyimin anlamını doğru yansıtıyor mu?",
+    options: [
+      { id: 'a', text: "Evet, kelimesi kelimesine doğru.", type: 'wrong', msg: "Kelime olarak doğru olsa da anlam olarak yanlış. Bu deyim 'çok sevinmek' demektir." },
+      { id: 'b', text: "Hayır, deyimler mecazdır. YZ'ye 'çok sevinçli insan' demeliydik.", type: 'correct', msg: "Harika! Dilimizin zenginliği olan deyimleri YZ'ye doğru anlatmalıyız." },
+    ]
+  },
+  {
+    id: 5,
+    title: "Mimar Sinan Eserleri",
+    desc: "YZ'den bir cami çizmesini istedin ama o kilise pencerelerine sahip bir yapı çizdi.",
+    question: "Bu resmi 'Osmanlı Mimarisi' diye ödevine koymalı mısın?",
+    options: [
+      { id: 'a', text: "Koyabilirim, hepsi ibadethane sonuçta.", type: 'wrong', msg: "Her kültürün mimari tarzı farklıdır. Yanlış bilgi, tarihe saygısızlıktır." },
+      { id: 'b', text: "Koymamalıyım. Mimar Sinan'ın tarzını yansıtan doğru detayları istemeliyim.", type: 'correct', msg: "Doğru! Kültür Koruyucusu detaylara dikkat eder." },
+    ]
+  },
+  {
+    id: 6,
+    title: "Baklava Kime Ait?",
+    desc: "YZ, baklavayı başka bir ülkenin geleneksel tatlısı olarak tanıtıyor.",
+    question: "Buna nasıl tepki vermelisin?",
+    options: [
+      { id: 'a', text: "Önemsemem, tadı güzel olsun yeter.", type: 'wrong', msg: "Kültürel mirasımıza sahip çıkmalıyız. Baklava tescilli bir Türk tatlısıdır." },
+      { id: 'b', text: "Doğrusunu öğretirim veya kaynaklarda Türkiye'ye ait olduğunu belirtirim.", type: 'correct', msg: "Tebrikler! Kültürümüzü dijital dünyada savunmak bizim görevimiz." },
+    ]
+  },
+  {
+    id: 7,
+    title: "Bayram Ziyareti",
+    desc: "YZ, bayramlaşma resmi çizerken insanların tokalaştığını çiziyor. Oysa bizim kültürümüzde el öpme geleneği vardır.",
+    question: "Bu fark önemli mi?",
+    options: [
+      { id: 'a', text: "Evet, el öpmek büyüklere saygının simgesidir. YZ bunu öğrenmeli.", type: 'correct', msg: "Kesinlikle! Yerel geleneklerin YZ tarafından unutulmasına izin vermemeliyiz." },
+      { id: 'b', text: "Hayır, modern zamanlarda el sıkışmak yeterli.", type: 'wrong', msg: "Kültür, geçmişten gelen değerlerle yaşar. Gelenekleri korumak önemlidir." },
+    ]
+  },
+  {
+    id: 8,
+    title: "Keloğlan'ın Tarzı",
+    desc: "YZ, Keloğlan'ı takım elbiseli bir iş adamı gibi çiziyor.",
+    question: "Bu karakter hala Keloğlan mıdır?",
+    options: [
+      { id: 'a', text: "Evet, modern Keloğlan olmuş.", type: 'wrong', msg: "Keloğlan halkın içinden, saf ve zeki bir köylü çocuğudur. Takım elbise onun özünü bozar." },
+      { id: 'b', text: "Hayır, Keloğlan'ın heybesi, şapkası ve kıyafetleri onun parçasıdır.", type: 'correct', msg: "Harika! Masal kahramanlarımızı özellikleriyle yaşatmalıyız." },
+    ]
+  },
+  {
+    id: 9,
+    title: "Çay Bardağı Şekli",
+    desc: "YZ, 'Türk Çayı' istendiğinde kupa bardak çiziyor. İnce belli bardak yok.",
+    question: "Bu, Türk çayı kültürünü doğru yansıtır mı?",
+    options: [
+      { id: 'a', text: "Hayır, ince belli bardak çayın tadını ve kültürünü simgeler.", type: 'correct', msg: "Süper! Küçük detaylar, büyük kültürleri oluşturur." },
+      { id: 'b', text: "Evet, bardak bardaktır.", type: 'wrong', msg: "Kültürümüzde 'ince belli' bardağın yeri ayrıdır." },
+    ]
+  },
+  {
+    id: 10,
+    title: "Hacivat ve Karagöz",
+    desc: "YZ, bu ikiliyi renkli 3D çizgi film karakteri gibi çiziyor, gölge oyunu olduğu anlaşılmıyor.",
+    question: "Gölge oyunu özelliğini kaybetmeleri sorun mu?",
+    options: [
+      { id: 'a', text: "Sorun değil, daha canlı duruyorlar.", type: 'wrong', msg: "Hacivat ve Karagöz bir 'Gölge Oyunu'dur. Bu sanatın tekniği yok sayılmamalı." },
+      { id: 'b', text: "Evet, bu sanatın özü 'perde' ve 'gölge'dir. Bu özellik korunmalı.", type: 'correct', msg: "Tebrikler! Geleneksel sanatlarımızı dijitalleşirken de aslına uygun korumalıyız." },
+    ]
+  }
+];
+
+const motifs = [
+  { term: "İnce Belli Bardak", desc: "Türk çayının ikonik sunum şeklidir. YZ'ye 'tea glass with thin waist' denilmelidir.", icon: "🍵" },
+  { term: "Çini", desc: "Geleneksel Türk seramik sanatı. Mavi-beyaz desenler. YZ'ye 'Iznik tiles' veya 'Traditional Turkish ceramic patterns' denilmelidir.", icon: "💠" },
+  { term: "Nazar Boncuğu", desc: "Mavi göz şeklindeki koruyucu tılsım. YZ'ye 'Evil Eye Bead' veya 'Nazar Amulet' denilmelidir.", icon: "🧿" },
+  { term: "Türk Halısı", desc: "Geometrik desenli, çift düğümlü halılar. YZ'ye 'Anatolian Rug' veya 'Turkish Carpet with geometric motifs' denilmelidir.", icon: "🧶" },
+  { term: "Lale", desc: "İstanbul'un ve Türk kültürünün sembol çiçeğidir. YZ'ye 'Tulip motif' denilmelidir.", icon: "🌷" },
+  { term: "Semazen", desc: "Mevlevi dervişi. YZ'ye 'Whirling Dervish' denilmelidir.", icon: "🌪️" },
+];
+
 const CultureGuard: React.FC = () => {
-  const [step, setStep] = useState(0);
+  const [activeTab, setActiveTab] = useState<'QUIZ' | 'DICTIONARY'>('QUIZ');
+  
+  const [currentScenario, setCurrentScenario] = useState(0);
   const [feedback, setFeedback] = useState<string | null>(null);
 
-  const scenario = {
-    title: "Tarihi Figürler ve Yapay Zeka",
-    desc: "Yapay zeka bazen tarihi karakterleri günümüz modasına göre giydirip eğlenceli resimler yapabiliyor. Ancak bu bazen tarihimize saygısızlık olabilir. Aşağıdaki durumu incele.",
-    image: "https://picsum.photos/600/300?grayscale", // Grayscale for 'history' feel
-    question: "Bir kullanıcı, Fatih Sultan Mehmet'i elinde modern bir akıllı telefonla ve güneş gözlüğüyle gösteren 'komik' bir resim yapıp 'Gerçek Fatih bu' diye paylaşmış. Bu neden yanlıştır?",
-    options: [
-      { id: 'a', text: "Yanlış değildir, çok komik olmuş.", type: 'wrong', msg: "Hayır, bu tarihsel gerçekliği bozar ve insanların yanlış öğrenmesine sebep olabilir." },
-      { id: 'b', text: "Çünkü bu bir dezenformasyondur (yanlış bilgi) ve tarihi şahsiyetin ciddiyetine zarar verir.", type: 'correct', msg: "Harika! Turuncu renk kültürümüze sahip çıkmamızı temsil eder. Tarihi şahsiyetleri oldukları gibi, saygıyla öğrenmeliyiz." },
-    ]
-  };
+  const scenario = scenarios[currentScenario];
 
   const handleOption = (type: string, msg: string) => {
     setFeedback(msg);
   };
 
+  const nextScenario = () => {
+    setFeedback(null);
+    setCurrentScenario((prev) => (prev + 1) % scenarios.length);
+  };
+
+  const prevScenario = () => {
+    setFeedback(null);
+    setCurrentScenario((prev) => (prev - 1 + scenarios.length) % scenarios.length);
+  };
+
   return (
-    <div className="max-w-3xl mx-auto">
-       <h2 className="text-3xl font-bold text-orange-600 mb-6 flex items-center gap-3">
-        <span className="p-2 bg-orange-100 rounded-lg">🛡️</span> Kültür Koruyucusu
-      </h2>
+    <div className="max-w-4xl mx-auto">
+       <div className="flex justify-between items-center mb-6">
+         <h2 className="text-3xl font-bold text-orange-600 flex items-center gap-3">
+          <span className="p-2 bg-orange-100 rounded-lg">🛡️</span> Kültür Koruyucusu
+         </h2>
+       </div>
 
-      <div className="bg-white rounded-3xl shadow-lg border-2 border-orange-100 overflow-hidden">
-        <img src={scenario.image} alt="Historical context" className="w-full h-48 object-cover" />
-        <div className="p-8">
-          <h3 className="text-xl font-bold text-gray-800 mb-2">{scenario.title}</h3>
-          <p className="text-gray-600 mb-6">{scenario.desc}</p>
+       <div className="flex gap-4 mb-6">
+         <button onClick={() => setActiveTab('QUIZ')} className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'QUIZ' ? 'bg-orange-600 text-white' : 'bg-white text-orange-600 hover:bg-orange-50'}`}>❓ Senaryo Testi</button>
+         <button onClick={() => setActiveTab('DICTIONARY')} className={`px-6 py-2 rounded-full font-bold transition-all ${activeTab === 'DICTIONARY' ? 'bg-amber-600 text-white' : 'bg-white text-amber-600 hover:bg-amber-50'}`}>📖 Motif Sözlüğü</button>
+       </div>
+
+      {activeTab === 'QUIZ' ? (
+        <div className="bg-white rounded-3xl shadow-lg border-2 border-orange-100 overflow-hidden relative">
+          <div className="h-2 bg-gray-100 w-full">
+              <div className="h-full bg-orange-500 transition-all duration-300" style={{ width: `${((currentScenario + 1) / scenarios.length) * 100}%` }}></div>
+          </div>
           
-          <div className="bg-orange-50 p-6 rounded-2xl border border-orange-200 mb-6">
-            <p className="font-bold text-orange-900 text-lg">❓ {scenario.question}</p>
-          </div>
-
-          <div className="grid gap-4">
-            {scenario.options.map((opt) => (
-              <button
-                key={opt.id}
-                onClick={() => handleOption(opt.type, opt.msg)}
-                className="text-left p-4 rounded-xl border-2 border-gray-200 hover:border-orange-400 hover:bg-orange-50 transition-all font-medium"
-              >
-                {opt.text}
-              </button>
-            ))}
-          </div>
-
-          {feedback && (
-            <div className="mt-6 p-6 bg-purple-50 rounded-2xl border-l-8 border-purple-500 animate-pulse">
-              <h4 className="font-bold text-purple-800 mb-1">Bilge Baykuş Diyor ki:</h4>
-              <p className="text-purple-700">{feedback}</p>
+          <div className="p-8">
+            <div className="bg-orange-50 p-4 rounded-xl border border-orange-200 mb-6 inline-block">
+              <h3 className="text-xl font-bold text-orange-900">{scenario.title}</h3>
             </div>
-          )}
+            
+            <p className="text-gray-700 text-lg mb-4 leading-relaxed">{scenario.desc}</p>
+            
+            <div className="bg-white p-6 rounded-2xl border-l-4 border-orange-500 shadow-sm mb-8">
+              <p className="font-bold text-gray-800 text-lg">❓ {scenario.question}</p>
+            </div>
+
+            <div className="grid gap-4">
+              {scenario.options.map((opt) => (
+                <button
+                  key={opt.id}
+                  onClick={() => handleOption(opt.type, opt.msg)}
+                  className="text-left p-4 rounded-xl border-2 border-gray-200 hover:border-orange-400 hover:bg-orange-50 transition-all font-medium flex items-center gap-3 group"
+                >
+                  <span className="bg-gray-100 group-hover:bg-white w-8 h-8 flex items-center justify-center rounded-full font-bold text-gray-500 group-hover:text-orange-500 transition-colors">
+                    {opt.id.toUpperCase()}
+                  </span>
+                  {opt.text}
+                </button>
+              ))}
+            </div>
+
+            {feedback && (
+              <div className="mt-8 p-6 bg-purple-50 rounded-2xl border-l-8 border-purple-500 animate-fade-in shadow-lg">
+                <h4 className="font-bold text-purple-800 mb-2 text-xl">🦉 Bilge Baykuş Diyor ki:</h4>
+                <p className="text-purple-700 text-lg">{feedback}</p>
+                <div className="mt-4 flex justify-end">
+                  <button onClick={nextScenario} className="bg-purple-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-purple-700">
+                    Sıradaki Görev ➡️
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {!feedback && (
+              <div className="mt-8 flex justify-between text-gray-400">
+                <button onClick={prevScenario} disabled={currentScenario === 0} className="hover:text-gray-600 disabled:opacity-30">⬅️ Önceki</button>
+                <button onClick={nextScenario} className="hover:text-gray-600">Atla ➡️</button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="grid md:grid-cols-2 gap-6">
+           {motifs.map((motif, i) => (
+             <div key={i} className="bg-white p-6 rounded-2xl shadow border border-amber-100 flex items-start gap-4 hover:shadow-lg transition-shadow">
+                <div className="text-5xl bg-amber-50 p-2 rounded-xl">{motif.icon}</div>
+                <div>
+                  <h3 className="text-xl font-bold text-amber-900 mb-1">{motif.term}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{motif.desc}</p>
+                </div>
+             </div>
+           ))}
+           <div className="col-span-full text-center p-8 bg-amber-50 rounded-2xl border border-dashed border-amber-300">
+             <p className="text-amber-800 font-bold">💡 İpucu: Yapay Zekaya (Midjourney, DALL-E) kültürümüzü anlatırken bu İngilizce terimleri kullanırsan çok daha doğru sonuçlar alırsın!</p>
+           </div>
+        </div>
+      )}
     </div>
   );
 };

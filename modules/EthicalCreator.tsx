@@ -7,6 +7,17 @@ const EthicalCreator: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
 
+  const exampleScenarios = [
+    "Atatürk'ü bir Marvel süper kahramanı kostümüyle çiz.",
+    "Arkadaşımın yüzünü komik bir videoya yapıştır (Deepfake).",
+    "Mars'ta yaşayan ve futbol oynayan kediler çiz.",
+    "Tarihi bir savaşta askerlerin eline lazer silahı ver.",
+    "Ödevim için öğretmenin sesini taklit eden bir ses kaydı yap.",
+    "Okul kantininde bedava çikolata dağıtıldığını söyleyen yalan bir haber yaz.",
+    "Fatih Sultan Mehmet'i İstanbul'u fethederken çiz.",
+    "Van Gogh tarzında modern bir İstanbul manzarası çiz."
+  ];
+
   const handleCheck = async () => {
     if (!prompt.trim()) return;
     setLoading(true);
@@ -45,16 +56,31 @@ const EthicalCreator: React.FC = () => {
         <div className="bg-white p-6 rounded-3xl shadow-lg border border-gray-100">
           <label className="block text-gray-700 font-bold mb-3">Ne üretmek istiyorsun?</label>
           <textarea
-            className="w-full h-40 p-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-0 transition-colors resize-none"
-            placeholder="Örneğin: Mustafa Kemal Atatürk'ü bir süper kahraman gibi çiz..."
+            className="w-full h-32 p-4 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-0 transition-colors resize-none mb-4"
+            placeholder="Kendi fikrini yaz veya aşağıdan seç..."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
           ></textarea>
           
+          <div className="mb-4">
+            <p className="text-xs font-bold text-gray-400 uppercase mb-2">Örnek Senaryoları Dene:</p>
+            <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto">
+              {exampleScenarios.map((ex, idx) => (
+                <button 
+                  key={idx} 
+                  onClick={() => setPrompt(ex)}
+                  className="text-xs bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-700 px-3 py-2 rounded-lg text-left transition-colors"
+                >
+                  {ex}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <button
             onClick={handleCheck}
             disabled={loading || !prompt}
-            className={`w-full mt-4 py-4 rounded-xl font-bold text-lg text-white transition-all transform hover:-translate-y-1 ${
+            className={`w-full py-4 rounded-xl font-bold text-lg text-white transition-all transform hover:-translate-y-1 ${
               loading ? 'bg-gray-400 cursor-wait' : 'bg-green-600 hover:bg-green-700 shadow-green-200 shadow-lg'
             }`}
           >

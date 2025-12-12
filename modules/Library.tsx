@@ -49,6 +49,51 @@ const Library: React.FC = () => {
       category: "VOCABULARY",
       summary: "Toplumsal değerleri, ahlakı ve dili en üst seviyede kullanan şiirler.",
       aiConnection: "Zengin bir Türkçe kelime hazinesi, YZ ile iletişimde süper gücündür. Eski kelimelerin anlamlarını bilmek, ifade yeteneğini derinleştirir."
+    },
+    {
+      id: 6,
+      title: "Frankenstein",
+      author: "Mary Shelley",
+      coverColor: "bg-green-700",
+      category: "FUTURE",
+      summary: "Bir bilim insanının yarattığı canlının kontrolden çıkmasını anlatan, bilim etiği üzerine yazılmış ilk ve en önemli eserlerden biri.",
+      aiConnection: "Yarattığımız teknolojilerin sorumluluğunu almalıyız. 'Etik Üretici' olmak, sonucunu düşünerek üretmek demektir."
+    },
+    {
+      id: 7,
+      title: "Charlie'nin Çikolata Fabrikası",
+      author: "Roald Dahl",
+      coverColor: "bg-yellow-500",
+      category: "FUTURE",
+      summary: "Fakir bir çocuk olan Charlie'nin, teknoloji harikası ve gizemli bir fabrikadaki macerası.",
+      aiConnection: "Teknoloji harika olabilir ama 'açgözlülük' ve 'şımarıklık' kötü sonuçlar doğurur. Dijital Denge'yi korumak önemlidir."
+    },
+    {
+      id: 8,
+      title: "Harry Potter",
+      author: "J.K. Rowling",
+      coverColor: "bg-purple-600",
+      category: "VOCABULARY",
+      summary: "Genç bir büyücünün maceraları. Aslında büyü de bir tür 'kodlama' gibidir; doğru kelimeleri doğru sırayla söylersen sihir gerçekleşir.",
+      aiConnection: "Kodlama ve Prompt yazmak modern çağın büyüsüdür. 'Wingardium Leviosa' demekle doğru prompt yazmak arasında çok benzerlik vardır!"
+    },
+    {
+      id: 9,
+      title: "Momo",
+      author: "Michael Ende",
+      coverColor: "bg-gray-500",
+      category: "FUTURE",
+      summary: "Zaman hırsızlarına karşı mücadele eden küçük bir kızın hikayesi. İnsanların birbirine ayırdığı zamanın değerini anlatır.",
+      aiConnection: "Teknoloji ve ekranlar bazen zamanımızı çalabilir (Zaman Hırsızları). Momo gibi, teknolojiyi sevdiklerimize ayırdığımız zamandan çalmasına izin vermemeliyiz."
+    },
+    {
+      id: 10,
+      title: "Dede Korkut Hikayeleri",
+      author: "Anonim",
+      coverColor: "bg-orange-500",
+      category: "HISTORY",
+      summary: "Türk kültürünün en eski destansı hikayeleri. Kahramanlık, misafirperverlik ve doğruluk değerlerini işler.",
+      aiConnection: "Kendi kültürünü bilmeyen, onu YZ'ye öğretemez. 'Kültür Koruyucusu' olmak için kendi hikayelerimizi çok iyi bilmeliyiz."
     }
   ];
 
@@ -64,7 +109,7 @@ const Library: React.FC = () => {
 
        {/* Bookshelf Visualization */}
        <div className="bg-[#8B4513] p-8 rounded-t-3xl shadow-2xl border-b-8 border-[#5D2E0C] relative">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 items-end h-64">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-y-8 gap-x-4 items-end min-h-64">
             {books.map((book) => (
               <div 
                 key={book.id}
@@ -77,10 +122,10 @@ const Library: React.FC = () => {
                   group
                 `}
               >
-                <div className="text-white font-serif font-bold text-sm md:text-base drop-shadow-md">
+                <div className="text-white font-serif font-bold text-sm md:text-base drop-shadow-md line-clamp-3">
                   {book.title}
                 </div>
-                <div className="absolute bottom-2 text-[10px] text-white/80 uppercase tracking-widest">{book.author}</div>
+                <div className="absolute bottom-2 text-[10px] text-white/80 uppercase tracking-widest truncate w-full px-2">{book.author}</div>
                 {/* Spine Effect */}
                 <div className="absolute left-2 top-0 bottom-0 w-[2px] bg-white/10"></div>
               </div>
@@ -94,7 +139,7 @@ const Library: React.FC = () => {
        <div className="bg-[#fdfbf7] p-8 min-h-[300px] border-x-2 border-b-2 border-gray-200 rounded-b-3xl shadow-xl">
          {selectedBook ? (
            <div className="animate-fade-in flex flex-col md:flex-row gap-8 items-start">
-             <div className={`w-32 h-48 ${selectedBook.coverColor} rounded-lg shadow-lg flex-shrink-0 hidden md:block`}></div>
+             <div className={`w-32 h-48 ${selectedBook.coverColor} rounded-lg shadow-lg flex-shrink-0 hidden md:block transition-all`}></div>
              <div>
                 <span className="inline-block px-3 py-1 bg-gray-200 rounded-full text-xs font-bold text-gray-600 mb-2">
                   {selectedBook.category === 'VOCABULARY' ? 'Kelime Hazinesi' : selectedBook.category === 'HISTORY' ? 'Tarih Bilinci' : 'Gelecek Vizyonu'}

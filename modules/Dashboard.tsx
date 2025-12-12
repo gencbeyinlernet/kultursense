@@ -44,7 +44,7 @@ const Dashboard: React.FC<DashboardProps> = ({ setView }) => {
         <div className="relative z-10">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">KültürSense Dünyasına Hoş Geldin! 🚀</h1>
           <p className="text-indigo-100 text-lg md:text-xl max-w-2xl leading-relaxed">
-            Burada sadece teknolojiyi kullanmayı değil, onu **anlamayı**, **yönetmeyi** ve **kültürümüzle harmanlamayı** öğreniyoruz. 
+            Burak TURGUT danışmanlığında 3 meslek lisesi öğrencisi tarafından hazırlanan projede sadece teknolojiyi kullanmayı değil, onu **anlamayı**, **yönetmeyi** ve **kültürümüzle harmanlamayı** öğreniyoruz. 
             12 farklı görev seni bekliyor. Hazır mısın?
           </p>
           <div className="mt-8 flex gap-4">
